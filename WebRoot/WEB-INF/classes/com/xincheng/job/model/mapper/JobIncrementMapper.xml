@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.job">
+
+	<resultMap id="JobIncrement" type="com.xincheng.job.model.JobIncrement">
+		<result property="id" column="ID" />
+		<result property="jobName" column="JOB_NAME" />
+		<result property="typeId" column="TYPE_ID" />
+		<result property="flag" column="FLAG" />
+		<result property="remark" column="REMARK" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="JobIncrement.columns">
+	    <![CDATA[
+		 ID,JOB_NAME,TYPE_ID,FLAG,REMARK,CREATE_TIME,UPDATE_TIME
+		 	    ]]>
+	</sql>
+
+	<sql id="JobIncrement.where">
+		<where>
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="jobName != null and jobName !='' ">
+				AND JOB_NAME = #{jobName}
+			</if>
+			<if test="typeId != null">
+				AND TYPE_ID = #{typeId}
+			</if>
+			<if test="startTime != null and startTime'' ">
+				AND CREATE_TIME &gt;= #{startTime}
+			</if>
+			<if test="endTime != null and endTime'' ">
+				AND CREATE_TIME &lt;= #{sendEndTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="JobIncrement.insert">
+		insert into SYS_JOB_INCREMENT
+		(
+		<include refid="JobIncrement.columns" />
+		)
+		values
+		(SEQ_SYS_JOB_INCREMENT.NEXTVAL,#{jobName},#{typeId},#{flag},#{remark},SYSDATE,SYSDATE)
+	</insert>
+
+	<update id="JobIncrement.update">
+		UPDATE SYS_JOB_INCREMENT
+		<set>
+			<if test="flag != null ">
+				FLAG = #{flag}
+				,
+			</if>
+			REMARK = #{remark},
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+	</update>
+
+	<select id="JobIncrement.select" resultMap="JobIncrement">
+		SELECT
+		<include refid="JobIncrement.columns" />
+		FROM SYS_JOB_INCREMENT
+	</select>
+
+	<select id="JobIncrement.getList" resultMap="JobIncrement">
+		SELECT
+		<include refid="JobIncrement.columns" />
+		FROM SYS_JOB_INCREMENT
+		<include refid="JobIncrement.where" />
+	</select>
+
+	<select id="JobIncrement.getById" resultMap="JobIncrement">
+		SELECT
+		<include refid="JobIncrement.columns" />
+		FROM SYS_JOB_INCREMENT
+		WHERE
+		ID=#{id}
+	</select>
+
+	<select id="JobIncrement.getByPage" resultMap="JobIncrement">
+		SELECT R.* FROM (
+		SELECT T.*,rownum row_num FROM (
+		SELECT
+		<include refid="JobIncrement.columns" />
+		FROM SYS_JOB_INCREMENT
+		<include refid="JobIncrement.where" />
+		) T
+		) R
+		WHERE R.row_num &lt;=#{pageTo} and R.row_num >#{pageFrom}
+	</select>
+
+	<select id="JobIncrement.count" resultType="int">
+		SELECT count(1) FROM SYS_JOB_INCREMENT
+		<include refid="JobIncrement.where" />
+	</select>
+	<select id="JobIncrement.getByTypeId" resultMap="JobIncrement">
+		SELECT
+		<include refid="JobIncrement.columns" />
+		FROM SYS_JOB_INCREMENT
+		WHERE
+		TYPE_ID=#{typeId}
+	</select>
+</mapper>

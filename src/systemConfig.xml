@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Data>
+	<!-- 获取服务号TOKEN接口地址 -->
+	<MPGetToken>
+		http://testwap.citicpru.com.cn/wxis/GetAccTokenByTime
+	</MPGetToken>
+	<!-- 获取服务号OPEN接口地址 -->
+	<MPGetOpenId>
+		http://testwap.citicpru.com.cn/wxis/WXOAuthGetOpenID
+	</MPGetOpenId>
+	<!-- 获取服务号ticket接口地址 -->
+	<MPGetJsTicket>
+		http://testwap.citicpru.com.cn/wxis/WeiXinSign
+	</MPGetJsTicket>
+	<!-- 服务号认证接口地址 -->
+	<MPAuthorize>
+		https://open.weixin.qq.com/connect/oauth2/authorize
+	</MPAuthorize>
+	<!-- 可重发消息的服务号ERROR CODE -->
+	<MPMsgErrorCode>
+		-1,40001,40029,40030,42001,42002,42003,61450,9001003
+	</MPMsgErrorCode>
+	<!-- 可重发消息的企业号ERROR CODE -->
+	<EntMsgErrorCode>
+		-1,40001,40014,42001,42002,42003
+	</EntMsgErrorCode>
+	<!-- 服务号appid -->
+	<MPAppId>
+		wxd05f2d342a9aed90
+	</MPAppId>
+	<ESActivityENTMsgTemplateId>
+		5000
+	</ESActivityENTMsgTemplateId>
+	<ESLuckydrawDataStaticStartDate>
+		20160301
+	</ESLuckydrawDataStaticStartDate>
+	<AMDataSyncEncryptKey>
+		yxy*%_3S
+	</AMDataSyncEncryptKey>
+	<AMDataSyncAesKey>
+		yxy_lOKI_@%165-WXCRSSTYUIJhdgr80
+	</AMDataSyncAesKey>
+	<AMDownloadActivityData>
+		http://121.201.97.113:30000/agents/basesign/service/am/data/downloadActivityData
+	</AMDownloadActivityData>
+	<AMDownloadBatch>
+		2000
+	</AMDownloadBatch>
+	<SsoUrl>
+		https://uamssso.prd.xincheng.china/uamssso/login.jsp
+	</SsoUrl>
+	<DestUrl>
+		http://128.232.6.28:8080/msgc/jsp/Master.jsp
+	</DestUrl>
+	<KadanServiceUri>
+		<!--http://128.232.6.26:8080/kadan-service/services/kadan/restful/order -->
+		 http://128.232.6.28:9030/kadan-service/services/kadan/restful/order
+	</KadanServiceUri>
+	<KadanServiceApiSecretKey>
+		WeChat20160527
+	</KadanServiceApiSecretKey>
+	<CIFApiUrl>
+		<!-- http://128.232.11.35:9083/CIF/services/CIFService?wsdl -->
+		http://128.232.9.222:9085/CIF/services/CIFService?wsdl
+	</CIFApiUrl>
+	<CIFApiKey>
+		12345678
+	</CIFApiKey>
+	<ESActivityUrlForClient>
+		https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd05f2d342a9aed90&amp;redirect_uri=https://test2.citicpruagents.com.cn/luckydraw/activities/customer/am006/html/luckyDraw.html&amp;response_type=code&amp;scope=snsapi_base&amp;state=1#wechat_redirect
+	</ESActivityUrlForClient>
+	<ESActivityMSGTemplatId>
+		WuHdDat3NHu3BD0P1y8qP2OroLo-8kqBHrHWllNZCaI
+	</ESActivityMSGTemplatId>
+	<ESActivityMSGContent>
+		感谢您选择使用信诚人寿的电子保单！
+	</ESActivityMSGContent>
+	<ESActivityMSGLocation>
+		电子保单抽奖
+	</ESActivityMSGLocation>
+	<ESActivityMSGTtime>
+		2017年8月1日~11月10日
+	</ESActivityMSGTtime>
+	<ESActivityMSGRemark>
+		恭喜您获得活动机会。点击进入活动界面，祝您好运！
+	</ESActivityMSGRemark>
+	<ActivityID>
+		7
+	</ActivityID>
+</Data>

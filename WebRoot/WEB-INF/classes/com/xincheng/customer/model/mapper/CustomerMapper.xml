@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.customer">
+
+	<resultMap id="CustomerMsg" type="com.xincheng.customer.model.CustomerMsg">
+		<result property="customerNo" column="CUSTOMER_NO" />
+		<result property="sendTime" column="SEND_TIME" />
+		<result property="content" column="CONTENT" />
+		<result property="billNo" column="BILL_NO" />
+		<result property="typeId" column="TYPE_ID" />
+		<result property="statusId" column="STATUS_ID" />
+		<result property="secuityNo" column="SECUITY_NO" />
+		<result property="sendResult" column="SEND_RESULT" />
+		<result property="remark" column="REMARK" />
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="CustomerMsg.columns">
+	    <![CDATA[
+		 CUSTOMER_NO,SEND_TIME,CONTENT,BILL_NO,STATUS_ID,SECUITY_NO,REMARK,SEND_RESULT
+		 	    ]]>
+	</sql>
+
+	<select id="CustomerMsg.getByPage" resultMap="CustomerMsg">
+		    SELECT 
+ 				<include refid="CustomerMsg.columns" /> 
+		    FROM (
+			SELECT <include refid="CustomerMsg.columns" />,
+			rownum row_num FROM (
+			SELECT
+				cr.CUSTOMER_NO , cr.BILL_NO , cr.CONTENT ,cr.SECUITY_NO,mp.STATUS_ID,mp.SEND_TIME,mp.REMARK,mp.SEND_RESULT
+			FROM CR_RENEWAL_MSG cr ,MSG_MP mp
+			<where>
+			    cr.ID = mp.REF_ID
+				<if test="customerNo != null and customerNo != ''">
+					AND cr.CUSTOMER_NO = #{customerNo}
+				</if>
+				<if test="billNo != null and billNo != ''">
+					AND cr.BILL_NO = #{billNo}
+				</if>
+				<if test="secuityNo != null and secuityNo != ''">
+					AND TRIM(cr.SECUITY_NO) = #{secuityNo}
+				</if>
+				<if test="statusId != null and statusId != ''">
+					AND mp.STATUS_ID = #{statusId}
+				</if>
+				<if test="sendStartTime != null and sendStartTime != ''">
+					AND TRUNC(mp.SEND_TIME) &gt;= TO_DATE(#{sendStartTime},'yyyy-MM-dd')
+				</if>
+				<if test="sendEndTime != null and sendEndTime != ''">
+					AND TRUNC(mp.SEND_TIME) &lt;= TO_DATE(#{sendEndTime},'yyyy-MM-dd')
+				</if>
+			</where>
+			order by mp.SEND_TIME DESC) 
+			    ) R
+			    WHERE R.row_num &lt;=#{pageTo} and R.row_num >#{pageFrom}
+
+	</select>
+
+	<select id="CustomerMsg.count" resultType="int">
+		SELECT count(1) 
+			FROM CR_RENEWAL_MSG cr , MSG_MP mp
+			<where>
+			    cr.ID = mp.REF_ID
+				<if test="customerNo != null and customerNo != ''">
+					AND cr.CUSTOMER_NO = #{customerNo}
+				</if>
+				<if test="billNo != null and billNo != ''">
+					AND cr.BILL_NO = #{billNo}
+				</if>
+				<if test="secuityNo != null and secuityNo != ''">
+					AND TRIM(cr.SECUITY_NO) = #{secuityNo}
+				</if>
+				<if test="statusId != null and statusId != ''">
+					AND mp.STATUS_ID = #{statusId}
+				</if>
+				<if test="sendStartTime != null and sendStartTime != ''">
+					AND TRUNC(mp.SEND_TIME) &gt;= TO_DATE(#{sendStartTime},'yyyy-MM-dd')
+				</if>
+				<if test="sendEndTime != null and sendEndTime != ''">
+					AND TRUNC(mp.SEND_TIME) &lt;= TO_DATE(#{sendEndTime},'yyyy-MM-dd')
+				</if>
+			</where>
+	</select>
+	
+</mapper>

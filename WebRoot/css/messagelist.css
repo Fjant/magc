@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+body{margin:0;padding:0;border:0;}
+p{margin:0;padding:0;}
+h2{margin:0;padding:0;}
+h3{margin:0;padding:0;}
+ul{margin:0;padding:0;list-style:none;}
+li{margin:0;padding:0;}
+a{ text-decoration:none;}
+.cc{clear:both;}
+
+/***********页面顶部 ***********/
+.SalesmanListTop{width:96%;margin:10px 0;margin-left:2%;border:1px solid #ddd;background:#d6e8ea;}
+.SalesmanListTop p{width:100%;padding:10px;line-height:30px; text-align:left;}
+.SalesmanListTop p table.tableContent{border-collapse: collapse;}
+.SalesmanListTop p table.tableContent tr.trContent{height:35px;line-height:35px;}
+.SalesmanListTop p table.tableContent tr.trContent th{font-weight:500;font-size:13px;color:#194f6d;line-height:15px;padding:5px 3px;background:#d6e8ea;}
+.SalesmanListTop p span{font-size:13px;color:#194f6d;margin-right:5px;vertical-align:middle;}
+.SalesmanListTop p input{display:inline-block;width:130px;height:28px;line-height:14px;font-size:13px;padding:5px 5px;margin-right:5px;border:1px solid #ddd;border-radius:3px;vertical-align:middle;}
+.SalesmanListTop p select{height:28px;line-height:14px;margin-right:5px;font-size:13px;padding:5px 5px;vertical-align:middle;}
+.SalesmanListTop p a{display:inline-block;margin-left:20px;width:60px;height:24px;line-height:24px;text-align:center;border-radius:3px;font-weight:600;font-size:13px;color:#194f6d;border:1px solid #ddd;border-radius:3px;background:url('../img/buttonBg.png') center repeat;}
+.SalesmanListTop p button{display:inline-block;height:26px;line-height:24px;padding:0 10px;text-align:center;border-radius:3px;font-weight:500;font-size:13px;color:#194f6d;border:1px solid #b0b0b0;border-radius:3px;background:url('../img/buttonBg.png') center repeat-x;vertical-align:middle;}
+
+/************中部内容区 ************/
+.SalesmanListContent{width:96%;margin-left:2%;padding-bottom:20px;}
+.SalesmanListContent table.titleTable{width:100%;border-collapse: collapse;}
+.SalesmanListContent table.titleTable tr.topTr{height:35px;line-height:35px;}
+.SalesmanListContent table.titleTable tr.topTr td{height:35x;line-height:35px;background:#b9dce2;border:1px solid #b9dce2;}
+.topTrLeft{float:left;font-size:13px;}
+.topTrLeft a{display:block;float:right;margin-left:10px;margin-top:5px;padding:0 10px;height:24px;line-height:24px;text-align:center;border-radius:3px;font-size:13px;color:#194f6d;border:1px solid #ddd;border-radius:3px;background:url('../img/buttonBg.png') center repeat;cursor:pointer;}
+.topTrLeft input{display: block;float: left;verticle-align:middle;padding:0;margin:0px 0px 0px 33px;cursor:pointer;}
+.topTrLeft label{display:block;float:left;}
+.topTrRight{float:right;margin-right:20px;}
+.topTrRight input{display:inline-block;verticle-align:middle;padding:0;margin:0;cursor:pointer;}
+.topTrRight label{display:inline-block;line-height:35px;font-size:13px;color:#194f6d;cursor:pointer;}
+.topTrRight span{display:inline-block;line-height:35px;font-size:13px;color:#194f6d;margin-left:10px;cursor:pointer;}
+.topTrRight a{display:block;float:left;margin-left:10px;margin-top:5px;padding:0 10px;height:24px;line-height:24px;text-align:center;border-radius:3px;font-size:13px;color:#194f6d;border:1px solid #b0b0b0;border-radius:3px;background:url('../img/buttonBg.png') center repeat-x;vertical-align:middle;cursor:pointer;}
+.SalesmanListContent table.titleTable tr.titleTr th{font-weight:500;font-size:13px;color:#194f6d;line-height:15px;padding:5px 3px;background:#d6e8ea;border:1px solid #b9dce2;}
+.SalesmanListContent table.contentTable{width:100%;border-collapse: collapse;}
+.SalesmanListContent table.contentTable tr.listTr td{font-size:13px;color:#194f6d;line-height:15px;padding:3px;text-align:center; border:1px solid #b9dce2;word-break: break-all;}
+.SalesmanListContent table.contentTable tr.listTr td a{display:inline-block;cursor:pointer;verticle-algn:center; text-align:center;line-height:15px;margin:0;padding:0;}
+.SalesmanListContent table.contentTable tr.listTr td span{display:inline-block;verticle-algn:center;margin:0;padding:0;width:10px;text-algn:center;}
+.SalesmanListContent table.contentTable tr.detailsTr td{border:1px solid #b9dce2;font-size:13px;color:194f6d;padding:5px 10px;}
+
+.detailsTrLeft{float:left;width:20%;line-height:25px;}
+.detailsTrCenter{float:left;width:25%;line-height:20px;}
+.detailsTrRight{float:left;width:50%;margin-left:5%;}
+.detailsTrRight a{display:block;float:left;width:160px;height:50px;color:194f6d;margin-right:5px;margin-bottom:5px;}
+.detailsTrRight a img{display:block;float:left;width:50px;height:50px;margin:0;padding:0;}
+.detailsTrRight a span{display:block;float:left;height:40px;line-height:20px;width:100px;margin:0;padding:0;margin-top:5px;}

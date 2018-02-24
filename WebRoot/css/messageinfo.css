@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+body{margin:0;padding:0;border:0;}
+p{margin:0;padding:0;}
+h2{margin:0;padding:0;}
+h3{margin:0;padding:0;}
+ul{margin:0;padding:0;list-style:none;}
+li{margin:0;padding:0;}
+a{ text-decoration:none;}
+.cc{clear:both;}
+
+/***********页面顶部 ***********/
+.SalesmanListTop{width:96%;margin:10px 0;margin-left:2%;height:50px;border:1px solid #ddd;background:#d6e8ea;}
+.SalesmanListTop p{width:100%;margin-top:10px;text-align:center;height:26px;line-height:26px;}
+.SalesmanListTop p input{display:inline-block;margin-right:15px;width:140px;line-height:14px;font-size:13px;padding:5px 5px;margin:0;border:1px solid #ddd;border-radius:3px;}
+.SalesmanListTop p a{display:inline-block;margin-left:20px;width:60px;height:24px;line-height:24px;text-align:center;border-radius:3px;font-weight:600;font-size:13px;color:#194f6d;border:1px solid #ddd;border-radius:3px;background:url('../img/buttonBg.png') center repeat;}
+.SalesmanListTop p button{display:inline-block;height:25px;line-height:24px;padding:0 10px;text-align:center;border-radius:3px;font-weight:500;font-size:13px;color:#194f6d;border:1px solid #b0b0b0;border-radius:3px;background:url('../img/buttonBg.png') center repeat-x;}
+
+/***********中部内容区 ***********/
+
+.EditBox{padding:10px;}
+.EditBox p{font-size:13px;line-height:30px;color:#194f6d;}
+.EditBox p b{font-weight:500;display:inline-block;width:10px;}
+.EditBox p span{display:inline-block;width:190px;}
+.EditBox p label{cursor:pointer;margin-right:5px;}
+.EditBox p select{width:150px;margin:0;padding:0;}
+.EditBox p a{display:inline-block;vertical-align:middle;width:90px;height:25px;line-height:25px;text-align:center;color:#fff;background:#feb36b;cursor:pointer;}
+.EditBox p a.item{display:inline-block;vertical-align:middle;width:auto;height:23px;line-height:23px;text-align:left;background:#fff;border:1px solid #feb36d;padding:0 5px;color:#feb36b;cursor:auto;margin-left:10px;margin-bottom:5px;}
+.EditBox p a.item i{display:inline-block;font-style:normal;padding-right:10px;vertical-align:middle;}
+.EditBox p a.item em{display:inline-block;vertical-align:middle;height:23px;width:20px;background:url("../img/itemDeleteIcon.png") center no-repeat; cursor:pointer;}
+.EditBox p button{display:inline-block;margin-left:20px;height:25px;line-height:24px;padding:0 10px;text-align:center;border-radius:3px;font-weight:500;font-size:13px;color:#194f6d;border:1px solid #b0b0b0;border-radius:3px;background:url('../img/buttonBg.png') center repeat-x;}
+.EditBox p#removeDateList{padding:5px 0 10px 0;}
+.EditBox p#addDateList{padding:5px 0 10px 0;}
+.EditBox textarea{margin:0 0 0 -4px;}
+.signTimeBox{margin:10px;padding:5px;border:1px solid #ddd;width:400px;}
+
+.SalesmanListContent{width:96%;margin-left:2%;padding-bottom:20px;padding-top:20px;}
+.SalesmanListContent table.titleTable{width:100%;border-collapse: collapse;}
+.SalesmanListContent table.titleTable tr.topTr{height:35px;line-height:35px;}
+.SalesmanListContent table.titleTable tr.topTr td{height:35x;line-height:35px;background:#b9dce2;border:1px solid #b9dce2;}
+.topTrLeft{float:left;}
+.topTrLeft a{display:block;float:left;margin-left:10px;margin-top:5px;padding:0 10px;height:24px;line-height:24px;text-align:center;border-radius:3px;font-size:13px;color:#194f6d;border:1px solid #ddd;border-radius:3px;background:url('../img/buttonBg.png') center repeat;cursor:pointer;}
+.topTrRight{float:right;margin-right:20px;}
+.topTrRight a{display:block;float:left;margin-left:10px;margin-top:5px;padding:0 10px;height:24px;line-height:24px;text-align:center;border-radius:3px;font-size:13px;color:#194f6d;border:1px solid #ddd;border-radius:3px;background:url('../img/buttonBg.png') center repeat;cursor:pointer;}
+.topTrRight input{display:inline-block;verticle-align:middle;padding:0;margin:0;cursor:pointer;}
+.topTrRight label{display:inline-block;line-height:35px;font-size:13px;color:#194f6d;cursor:pointer;}
+.topTrRight span{display:inline-block;line-height:35px;font-size:13px;color:#194f6d;margin-left:10px;cursor:pointer;}
+.SalesmanListContent table.titleTable tr.titleTr th{font-weight:500;font-size:13px;color:#194f6d;line-height:15px;padding:5px 3px;background:#d6e8ea;border:1px solid #b9dce2;}
+.SalesmanListContent table.contentTable{width:100%;border-collapse: collapse;}
+.SalesmanListContent table.contentTable tr.listTr td{font-size:13px;color:#194f6d;line-height:15px;padding:3px;text-align:center; border:1px solid #b9dce2;word-break: break-all;}
+.SalesmanListContent table.contentTable tr.listTr td a{display:inline-block;cursor:pointer;verticle-algn:center; text-align:center;line-height:15px;margin:0;padding:0;}
+.SalesmanListContent table.contentTable tr.listTr td span{display:inline-block;verticle-algn:center;margin:0;padding:0;width:10px;text-algn:center;}
+.SalesmanListContent table.contentTable tr.detailsTr td{border:1px solid #b9dce2;font-size:13px;color:194f6d;padding:5px 10px;}
+
+.detailsTrLeft{float:left;width:20%;line-height:25px;}
+.detailsTrCenter{float:left;width:25%;line-height:20px;}
+.detailsTrRight{float:left;width:50%;margin-left:5%;}
+.detailsTrRight a{display:block;float:left;width:160px;height:50px;color:194f6d;margin-right:5px;margin-bottom:5px;}
+.detailsTrRight a img{display:block;float:left;width:50px;height:50px;margin:0;padding:0;}
+.detailsTrRight a span{display:block;float:left;height:40px;line-height:20px;width:100px;margin:0;padding:0;margin-top:5px;}

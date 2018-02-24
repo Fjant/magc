@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.msg">
+
+	<resultMap id="Template" type="com.xincheng.msg.model.Template">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="content" column="CONTENT" />
+		<result property="createBy" column="CREATE_BY" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="Template.columns">
+	    <![CDATA[
+		 ID,NAME,CONTENT,CREATE_BY,CREATE_TIME,UPDATE_TIME
+		 	    ]]>
+	</sql>
+
+	<sql id="Template.where">
+		<where>
+			<if test="id != null and id!='' ">
+				AND ID = #{id}
+			</if>
+			<if test="name != null and name !='' ">
+				AND NAME like '%'||#{name}||'%'
+			</if>
+			<if test="content != null and content !='' ">
+				AND CONTENT = #{content}
+			</if>
+			<if test="createBy != null and createBy!='' ">
+				AND CREATE_BY = #{createBy}
+			</if>
+			<if test="createStartTime != null and createStartTime!='' ">
+				AND TO_CHAR(CREATE_TIME,'yyyy-MM-dd') &gt;= #{createStartTime}
+			</if>
+			<if test="createEndTime != null and createEndTime!='' ">
+				AND TO_CHAR(CREATE_TIME,'yyyy-MM-dd') &lt;= #{createEndTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="Template.insert">
+		insert into MSG_TEMPLATE
+		(
+		ID,NAME,CONTENT,CREATE_BY,CREATE_TIME
+		)
+		values
+		(SEQ_MSG_TEMPLATE.NEXTVAL,#{name},#{content},#{createBy},#{createTime})
+	</insert>
+
+	<update id="Template.update">
+		UPDATE MSG_TEMPLATE
+		<set>
+			<if test="name != null ">
+				NAME = #{name}
+				,
+			</if>
+			<if test="content != null ">
+				CONTENT = #{content}
+				,
+			</if>
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+	</update>
+
+	<select id="Template.getList" resultMap="Template">
+		SELECT
+		<include refid="Template.columns" />
+		FROM MSG_TEMPLATE
+		<include refid="Template.where" />
+	</select>
+
+	<select id="Template.getById" resultMap="Template">
+		SELECT
+		<include refid="Template.columns" />
+		FROM MSG_TEMPLATE
+		WHERE
+		ID=#{id}
+	</select>
+
+	<select id="Template.getByPage" resultMap="Template">
+		    SELECT R.* FROM (
+			SELECT T.*,rownum row_num FROM (
+			SELECT
+			<include refid="Template.columns" />
+			FROM MSG_TEMPLATE
+			<include refid="Template.where" />
+			) T
+		    ) R
+		    WHERE R.row_num &lt;=#{pageTo} and R.row_num >#{pageFrom}
+
+	</select>
+
+	<select id="Template.count" resultType="int">
+		SELECT count(1) FROM MSG_TEMPLATE
+		<include refid="Template.where" />
+	</select>
+		
+	<delete id="Template.deleteByPrimaryKey">
+    <![CDATA[
+        DELETE FROM  MSG_TEMPLATE
+        WHERE  
+        						ID=#{id}
+																																																																																																									    ]]>
+	</delete>
+	
+</mapper>

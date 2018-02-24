@@ -1,0 +1,78 @@
+.td_01 {
+	BORDER-RIGHT: #939596 1px solid; BORDER-TOP: #939596 1px solid; BORDER-LEFT: #939596 1px solid; BORDER-BOTTOM: #939596 1px solid
+}
+TD {
+	FONT-SIZE: 12px; COLOR: #000000
+}
+.td_02 {
+	BORDER-RIGHT: #9a9999 1px solid; BORDER-TOP: #d7d6d6 1px solid; BORDER-LEFT: #d7d6d6 1px solid; BORDER-BOTTOM: #9a9999 1px solid
+}
+.table_00 {
+	BORDER-TOP: #666666 1px solid; BORDER-LEFT: #666666 1px solid
+}
+.td_00 {
+	BORDER-RIGHT: #666666 1px solid; BORDER-BOTTOM: #666666 1px solid
+}
+.bai_zi {
+	COLOR: #ffffff
+}
+.black {
+	FONT-SIZE: 12px; COLOR: #000000; LINE-HEIGHT: 1.5; TEXT-DECORATION: none
+}
+.black:hover {
+	FONT-SIZE: 12px; COLOR: #ffffff; LINE-HEIGHT: 1.5; TEXT-DECORATION: none
+}
+.red {
+	COLOR: #e27400
+}
+.lei01:link {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+.lei01:visited {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+.lei01:active {
+	TEXT-DECORATION: none
+}
+.lei01:hover {
+	COLOR: #ffff00; TEXT-DECORATION: none
+}
+.txt_red {
+	FONT-SIZE: 12px; COLOR: #ff0000
+}
+.txt_grey {
+	FONT-SIZE: 12px; COLOR: #9e9e9e
+}
+.txt_grey1 {
+	FONT-SIZE: 12px; COLOR: #575757
+}
+.txt_black {
+	FONT-SIZE: 14px; COLOR: #000000
+}
+A {
+	TEXT-DECORATION: none
+}
+.td_button {
+	BACKGROUND-IMAGE: url(../images/battom_di.jpg)
+}
+.a_button:link {
+	CURSOR: hand; COLOR: #000000; TEXT-DECORATION: none
+}
+.a_button:visited {
+	CURSOR: hand; COLOR: #000000; TEXT-DECORATION: none
+}
+.a_button:active {
+	CURSOR: hand; COLOR: #000000; TEXT-DECORATION: none
+}
+.a_button:hover {
+	CURSOR: hand; COLOR: #000000; TEXT-DECORATION: none
+}
+INPUT {
+	FONT-SIZE: 12px
+}
+.pwd {
+	WIDTH: 127px
+}
+.ValidationFailCssStyle {
+	BORDER-RIGHT: #ffcc88 2px solid; BORDER-TOP: #ffcc88 2px solid; BORDER-LEFT: #ffcc88 2px solid; BORDER-BOTTOM: #ffcc88 2px solid
+}

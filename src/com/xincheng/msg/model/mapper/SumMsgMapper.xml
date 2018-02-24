@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.msg">
+
+	<resultMap id="SumMsg" type="com.xincheng.msg.model.SumMsg">
+	    <result property="totalNum" column="TOTAL_NUM" />
+		<result property="successNum" column="SUCCESS_NUM" />
+		<result property="failNum" column="FAIL_NUM" />
+		<result property="armeNum" column="ARME_NUM" />
+		<result property="successRate" column="SUCCESS_RATE" />
+		<result property="failRate" column="FAIL_RATE" />
+	</resultMap>
+	
+	<select id="SumMsg.entMsgRate" resultMap="SumMsg">
+		SELECT A.TOTAL_NUM,
+               B.SUCCESS_NUM,
+       		   C.FAIL_NUM,
+       		   D.ARME_NUM,
+      		   TO_CHAR(DECODE(A.TOTAL_NUM, 0, 0, B.SUCCESS_NUM / A.TOTAL_NUM * 100), '990.99')|| '%' SUCCESS_RATE,
+         	   TO_CHAR(DECODE(A.TOTAL_NUM, 0, 0, C.FAIL_NUM / A.TOTAL_NUM * 100),'990.99')|| '%' FAIL_RATE
+		  FROM (SELECT COUNT(1)  AS TOTAL_NUM FROM MSG_ENTERPRISE
+		        <where>
+		               SEND_TYPE &lt;>3
+			      <if test="sendStartTime != null and sendStartTime!='' ">
+				 	  AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				  </if>
+				  <if test="sendEndTime != null and sendEndTime!='' ">
+					  AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				  </if>
+		        </where>                                    ) A,
+			   (SELECT COUNT(1) AS SUCCESS_NUM FROM MSG_ENTERPRISE  
+			   <where>
+			         STATUS_ID=1
+			         AND SEND_TYPE &lt;>3
+			         <if test="sendStartTime != null and sendStartTime!='' ">
+				 	     AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				  	</if>
+				    <if test="sendEndTime != null and sendEndTime!='' ">
+					    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				    </if>
+		        </where>) B,
+			   (SELECT COUNT(1) AS FAIL_NUM FROM MSG_ENTERPRISE 
+			   <where>
+			         STATUS_ID&lt;>0 AND STATUS_ID&lt;>1
+			         AND SEND_TYPE &lt;>3
+			        <if test="sendStartTime != null and sendStartTime!='' ">
+				 	    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				    </if>
+				    <if test="sendEndTime != null and sendEndTime!='' ">
+					    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				    </if>
+		        </where>) C,
+		        (SELECT COUNT(1) AS ARME_NUM FROM MSG_ENTERPRISE 
+			   <where>
+			         STATUS_ID=0
+			         AND SEND_TYPE &lt;>3
+			        <if test="sendStartTime != null and sendStartTime!='' ">
+				 	    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				    </if>
+				    <if test="sendEndTime != null and sendEndTime!='' ">
+					    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				    </if>
+		        </where>) D
+	</select>
+	
+	<select id="SumMsg.mPMsgRate" resultMap="SumMsg">
+		SELECT A.TOTAL_NUM,
+               B.SUCCESS_NUM,
+       		   C.FAIL_NUM,
+       		   D.ARME_NUM,
+      		   TO_CHAR(DECODE(A.TOTAL_NUM, 0, 0, B.SUCCESS_NUM / A.TOTAL_NUM * 100), '990.99')|| '%' SUCCESS_RATE,
+       		   TO_CHAR(DECODE(A.TOTAL_NUM, 0, 0, C.FAIL_NUM / A.TOTAL_NUM * 100),'990.99')|| '%' FAIL_RATE
+		  FROM (SELECT COUNT(1)  AS TOTAL_NUM FROM MSG_MP
+		        <where>
+		               SEND_TYPE &lt;>3
+			        <if test="sendStartTime != null and sendStartTime!='' ">
+				 	    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				    </if>
+				    <if test="sendEndTime != null and sendEndTime!='' ">
+					    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				    </if>
+		        </where>                                    ) A,
+			   (SELECT COUNT(1) AS SUCCESS_NUM FROM MSG_MP  
+			   <where>
+			           STATUS_ID=1
+			           AND SEND_TYPE &lt;>3
+			       <if test="sendStartTime != null and sendStartTime!='' ">
+				 	    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				    </if>
+				    <if test="sendEndTime != null and sendEndTime!='' ">
+					    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				    </if>
+		        </where>) B,
+			   (SELECT COUNT(1) AS FAIL_NUM FROM MSG_MP 
+			   <where>
+			           STATUS_ID&lt;>0 AND STATUS_ID&lt;>1
+			           AND SEND_TYPE &lt;>3
+			        <if test="sendStartTime != null and sendStartTime!='' ">
+				 	    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				    </if>
+				    <if test="sendEndTime != null and sendEndTime!='' ">
+					    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				    </if>
+		        </where>) C,
+		        (SELECT COUNT(1) AS ARME_NUM FROM MSG_MP 
+			   <where>
+			           STATUS_ID=0
+			           AND SEND_TYPE &lt;>3
+			        <if test="sendStartTime != null and sendStartTime!='' ">
+				 	    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+				    </if>
+				    <if test="sendEndTime != null and sendEndTime!='' ">
+					    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+				    </if>
+		        </where>) D
+	</select>
+	
+</mapper>

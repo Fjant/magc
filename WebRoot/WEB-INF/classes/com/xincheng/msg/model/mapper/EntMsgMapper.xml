@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.msg">
+
+	<resultMap id="EntMsg" type="com.xincheng.msg.model.EntMsg">
+		<result property="id" column="ID" />
+		<result property="userId" column="USER_ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="content" column="CONTENT" />
+		<result property="templateId" column="TEMPLATE_ID" />
+		<result property="typeId" column="TYPE_ID" />
+		<result property="fromServer" column="FROM_SERVER" />
+		<result property="statusId" column="STATUS_ID" />
+		<result property="sendType" column="SEND_TYPE" />
+		<result property="sendResult" column="SEND_RESULT" />
+		<result property="sendTime" column="SEND_TIME" />
+		<result property="relSys" column="REL_SYS" />
+		<result property="remark" column="REMARK" />
+		<result property="resendTimes" column="RE_SEND_TIMES" />
+		<result property="createBy" column="CREATE_BY" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="EntMsg.columns">
+	    <![CDATA[
+		 ID,USER_ID,USER_NAME,CONTENT,TEMPLATE_ID,TYPE_ID,FROM_SERVER,STATUS_ID,SEND_TYPE,SEND_RESULT,SEND_TIME,REL_SYS,REMARK,RE_SEND_TIMES,CREATE_BY,CREATE_TIME,UPDATE_TIME
+		 	    ]]>
+	</sql>
+
+	<sql id="EntMsg.where">
+		<where>
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="userId != null and userId!='' ">
+				AND USER_ID like '%'||#{userId}||'%'
+			</if>
+			<if test="userName != null and userName!='' ">
+				AND USER_NAME like '%'||#{userName}||'%'
+			</if>
+			<if test="content != null and content!='' ">
+				AND CONTENT like '%'||#{content}||'%'
+			</if>
+			<if test="typeId != null">
+				AND TYPE_ID = #{typeId}
+			</if>
+			AND SEND_TYPE &lt;>3
+			<if test="sendType != null">
+				AND SEND_TYPE = #{sendType}
+			</if>
+			<if test="statusId != null">
+				AND STATUS_ID = #{statusId}
+			</if>
+			<if test="sendStartTime != null and sendStartTime!='' ">
+				AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+			</if>
+			<if test="sendEndTime != null and sendEndTime!='' ">
+				AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+			</if>
+			<if test="relSys != null and relSys !='' ">
+				AND REL_SYS = #{relSys}
+			</if>
+			<if test="createBy != null and createBy!='' ">
+				AND CREATE_BY = #{createBy}
+			</if>
+			<if test="createStartTime != null and createStartTime!='' ">
+				AND CREATE_TIME &gt;= #{createStartTime}
+			</if>
+			<if test="createEndTime != null and createEndTime!='' ">
+				AND CREATE_TIME &lt;= #{sendEndTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="EntMsg.insert">
+		insert into MSG_ENTERPRISE
+		(
+		<include refid="EntMsg.columns" />
+		)
+		values
+		(SEQ_MSG_ENTERPRISE.NEXTVAL,#{userId},#{userName},#{content},#{templateId,jdbcType=BIGINT},#{typeId,jdbcType=INTEGER},#{fromServer,jdbcType=VARCHAR},#{statusId},#{sendType,jdbcType=INTEGER},#{sendResult,jdbcType=TIMESTAMP},#{sendTime,jdbcType=TIMESTAMP},#{relSys},#{remark,jdbcType=VARCHAR},#{resendTimes,jdbcType=INTEGER},#{createBy},sysdate,null)
+	</insert>
+
+	<insert id="EntMsg.insert_batch">
+		insert into MSG_ENTERPRISE
+		(
+		<include refid="EntMsg.columns" />
+		)
+		values
+		(SEQ_MSG_ENTERPRISE.NEXTVAL,#{userId},#{userName},#{content},#{templateId,jdbcType=BIGINT},#{typeId,jdbcType=INTEGER},#{fromServer,jdbcType=VARCHAR},#{statusId},#{sendType,jdbcType=INTEGER},#{sendResult,jdbcType=TIMESTAMP},#{sendTime,jdbcType=TIMESTAMP},#{relSys},#{remark,jdbcType=VARCHAR},#{resendTimes,jdbcType=INTEGER},#{createBy},sysdate,null)
+	</insert>
+	
+	<update id="EntMsg.update">
+		UPDATE MSG_ENTERPRISE
+		<set>
+			<if test="statusId != null ">
+				STATUS_ID = #{statusId,jdbcType=INTEGER}
+				,
+			</if>
+			<if test="sendResult != null ">
+				SEND_RESULT = #{sendResult,jdbcType=VARCHAR}
+				,
+			</if>
+			RE_SEND_TIMES = #{resendTimes,jdbcType=INTEGER},
+			REMARK = #{remark,jdbcType=VARCHAR},
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+	</update>
+
+	<select id="EntMsg.getByPage" resultMap="EntMsg">
+		SELECT R.* FROM (
+		SELECT T.*,rownum row_num FROM (
+		SELECT
+		<include refid="EntMsg.columns" />
+		FROM MSG_ENTERPRISE
+		<include refid="EntMsg.where" />
+		) T
+		) R
+		WHERE R.row_num &lt;=#{pageTo} and R.row_num > #{pageFrom}
+
+	</select>
+
+	<select id="EntMsg.count" resultType="int">
+		SELECT count(1) FROM MSG_ENTERPRISE
+		<include refid="EntMsg.where" />
+	</select>
+	
+	<select id="EntMsg.getById" resultMap="EntMsg">
+		SELECT
+		<include refid="EntMsg.columns" />
+	    <![CDATA[
+		    FROM  MSG_ENTERPRISE
+        WHERE  
+        	 ID=#{id}																																																																																																										    ]]>
+	</select>
+	
+	<delete id="EntMsg.deleteByPrimaryKey">
+    <![CDATA[
+        DELETE FROM  MSG_ENTERPRISE
+        WHERE  
+        						ID=#{id}
+																																																																																																									    ]]>
+	</delete>
+	
+</mapper>

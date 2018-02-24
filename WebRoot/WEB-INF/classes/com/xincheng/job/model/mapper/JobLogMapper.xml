@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.job">
+
+	<resultMap id="JobLog" type="com.xincheng.job.model.JobLog">
+		<result property="id" column="ID" />		
+		<result property="jobName" column="JOB_NAME" />
+		<result property="incTypeId" column="INC_TYPE_ID" />
+		<result property="totalNumber" column="TOTAL_NUMBER" />
+		<result property="successNumber" column="SUCCESS_NUMBER" />
+		<result property="startTime" column="START_TIME" />
+		<result property="endTime" column="END_TIME" />
+		<result property="result" column="RESULT" />
+		<result property="remark" column="REMARK" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="JobLog.columns">
+	    <![CDATA[
+		 ID,JOB_NAME,INC_TYPE_ID,TOTAL_NUMBER,SUCCESS_NUMBER,START_TIME,END_TIME,RESULT,REMARK,CREATE_TIME,UPDATE_TIME
+		 	    ]]>
+	</sql>
+
+	<sql id="JobLog.where">
+		<where>
+			<if test="id != null and id!='' ">
+				AND ID = #{id}
+			</if>
+			<if test="jobName != null and jobName !='' ">
+				AND JOB_NAME like '%'||#{jobName}||'%'
+			</if>
+			<if test="statusId != null and statusId !='' ">
+				AND STATUS_ID = #{statusId}
+			</if>
+			<if test="result != null and result !='' ">
+				AND RESULT = #{result}
+			</if>
+			<if test="startTime != null and startTime !='' ">
+				AND TO_CHAR(START_TIME,'yyyy-MM-dd') &gt;= #{startTime}
+			</if>
+			<if test="endTime != null and endTime !='' ">
+				AND TO_CHAR(END_TIME,'yyyy-MM-dd') &lt;= #{endTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="JobLog.insert">
+		insert into SYS_JOB_LOG
+		(
+		<include refid="JobLog.columns" />
+		)
+		values
+		(SEQ_SYS_JOB.NEXTVAL,#{jobName},#{incTypeId},#{totalNumber},#{successNumber},#{startTime},#{endTime},#{result},#{remark},SYSDATE,NULL)
+	</insert>
+
+	<update id="JobLog.update">
+		UPDATE SYS_JOB_LOG
+		<set>
+			<if test="totalNumber != null ">
+				TOTAL_NUMBER = #{totalNumber}
+				,
+			</if>
+			<if test="successNumber != null ">
+				SUCCESS_NUMBER = #{successNumber}
+				,
+			</if>
+			<if test="startTime != null ">
+				START_TIME = #{startTime}
+				,
+			</if>
+			<if test="endTime != null ">
+				END_TIME = #{endTime}
+				,
+			</if>
+			ARGUMENT = #{argument},
+			<if test="result != null ">
+				RESULT = #{result}
+				,
+			</if>
+			REMARK = #{remark},
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+	</update>
+
+	<select id="JobLog.select" resultMap="JobLog">
+		SELECT
+		<include refid="JobLog.columns" />
+		FROM SYS_JOB_LOG
+	</select>
+	
+	<select id="JobLog.getList" resultMap="JobLog">
+		SELECT
+		<include refid="JobLog.columns" />
+		FROM SYS_JOB_LOG
+		<include refid="JobLog.where" />
+	</select>
+
+	<select id="JobLog.getById" resultMap="JobLog">
+		SELECT
+		<include refid="JobLog.columns" />
+		FROM SYS_JOB_LOG
+		WHERE
+		ID=#{id}
+	</select>
+
+	<select id="JobLog.getByPage" resultMap="JobLog">
+		SELECT R.* FROM (
+			SELECT T.*,rownum row_num FROM (
+			SELECT
+			<include refid="JobLog.columns" />
+			FROM SYS_JOB_LOG
+			<include refid="JobLog.where" />
+			) T
+		) R
+		WHERE R.row_num &lt;=#{pageTo} and R.row_num >#{pageFrom}
+	</select>
+
+	<select id="JobLog.count" resultType="int">
+		SELECT count(1) FROM SYS_JOB_LOG
+		<include refid="JobLog.where" />
+	</select>
+</mapper>

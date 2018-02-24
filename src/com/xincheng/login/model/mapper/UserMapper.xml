@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.xincheng.login">
+	<resultMap id="User" type="com.xincheng.login.model.User">
+		<result property="id" column="ID" />
+		<result property="userName" column="USER_NAME" />
+		<result property="password" column="PASSWORD" />
+	</resultMap>
+
+
+	<sql id="User.columns">
+	    <![CDATA[
+		ID,USER_NAME,PASSWORD
+	    ]]>
+	</sql>
+
+	<sql id="User.where">
+		<where>
+			<if test="id != null and id!='' ">
+				AND ID = #{id}
+			</if>
+
+			<if test="userName!= null  and userName!='' ">
+				AND USER_NAME like '%'||#{userName}||'%'
+			</if>
+		</where>
+	</sql>
+
+	<insert id="User.insert">
+		<selectKey resultType="java.lang.Long" order="BEFORE"
+			keyProperty="id">
+			SELECT SEQ_USER.nextval FROM DUAL
+		</selectKey>
+			
+    <![CDATA[
+        INSERT INTO T_USER (
+        	ID,PASSWORD,USER_NAME
+        ) VALUES (
+           	#{id},
+        	#{password},
+        	#{userName}
+        )
+    ]]>
+	</insert>
+
+	<update id="User.update">
+		UPDATE T_USER
+		<set>
+
+			<if test="password != null and password!='' ">
+				PASSWORD = #{password},
+			</if>
+			<if test="userName != null and userName!='' ">
+				USER_NAME = #{userName},
+			</if>
+
+		</set>
+		WHERE ID = #{id}
+
+	</update>
+
+	<update id="User.deleteByPrimaryKey">
+    <![CDATA[
+        delete  T_USER  
+        WHERE  ID = #{id}  
+    ]]>
+	</update>
+
+	<select id="User.getById" resultMap="User">
+		SELECT
+		<include refid="User.columns" />
+	    <![CDATA[
+		    FROM  T_USER
+	        WHERE 
+		        U_ID = #{id}  
+	    ]]>
+	</select>
+
+
+
+	<select id="User.count" resultType="long">
+		SELECT count(1) FROM T_USER
+		<include refid="User.where" />
+	</select>
+
+
+	<select id="User.select" resultMap="User">
+		SELECT
+		<include refid="User.columns" />
+		FROM T_USER
+		<include refid="User.where" />
+	</select>
+
+
+</mapper>

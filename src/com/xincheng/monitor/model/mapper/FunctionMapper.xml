@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.monitor">
+
+	<resultMap id="FunctionEntity" type="com.xincheng.monitor.model.FunctionEntity">
+		<result property="id" column="ID" />		
+		<result property="bizId" column="BIZ_ID" />
+		<result property="agntNum" column="AGNT_NUM" />
+		<result property="fromServer" column="FROM_SERVER" />
+		<result property="funcInterface" column="FUNC_INTERFACE" />
+		<result property="startTime" column="START_TIME" />
+		<result property="endTime" column="END_TIME" />
+		<result property="consumeMillTime" column="CONSUME_MILL_TIME" />
+		<result property="result" column="RESULT" />
+		<result property="remark" column="REMARK" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+	<insert id="FunctionEntity.insert">
+		insert into SYS_MONITOR_FUNC
+		(BIZ_ID,AGNT_NUM,FROM_SERVER,FUNC_INTERFACE,START_TIME,END_TIME,CONSUME_MILL_TIME,RESULT,REMARK,CREATE_TIME)
+		values
+		(#{bizId},#{agntNum},#{fromServer},#{funcInterface},#{startTime},#{endTime},#{consumeMillTime},#{result},#{remark},#{createTime})		 
+	</insert>
+</mapper>

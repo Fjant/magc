@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+	<!-- 定义数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${oracle_msgc.driverClass}" />
+		<property name="jdbcUrl" value="${oracle_msgc.jdbcUrl}" />
+		<property name="user" value="${oracle_msgc.user}" />
+		<property name="password" value="${oracle_msgc.password}" />
+		<property name="initialPoolSize" value="${oracle_msgc.c3p0.initialPoolSize}" />
+		<property name="minPoolSize" value="${oracle_msgc.c3p0.minPoolSize}" />
+		<property name="maxPoolSize" value="${oracle_msgc.c3p0.maxPoolSize}" />
+		<property name="maxStatements" value="${oracle_msgc.c3p0.maxStatements}" />
+		<property name="checkoutTimeout" value="${oracle_msgc.c3p0.checkoutTimeout}" />
+		<property name="idleConnectionTestPeriod" value="${oracle_msgc.c3p0.idleConnectionTestPeriod}" />
+		<property name="maxIdleTime" value="${oracle_msgc.c3p0.maxIdleTime}" />
+		<property name="acquireRetryAttempts" value="${oracle_msgc.c3p0.acquireRetryAttempts}" />
+	</bean>
+
+	<!-- log4jdbc可以将数据源执行的sql将占位符?替换成字符,并以日志打印出来. log4j配置: log4j.logger.jdbc.sqltiming=INFO -->
+	<bean id="log4jdbcInterceptor" class="net.sf.log4jdbc.DataSourceSpyInterceptor" />
+
+	<bean id="dataSourceLog4jdbcAutoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<list>
+				<value>log4jdbcInterceptor</value>
+			</list>
+		</property>
+		<property name="beanNames">
+			<list>
+				<value>dataSource</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

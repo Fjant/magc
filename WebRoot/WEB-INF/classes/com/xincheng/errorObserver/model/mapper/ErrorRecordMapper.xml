@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.errorObserver">
+
+
+	<resultMap id="ErrorRecord" type="com.xincheng.errorObserver.model.ErrorRecord">
+		<result property="id" column="ID" />
+		<result property="functionModularId" column="FUNCTION_MODULAR_ID" />
+		<result property="operatorId" column="OPERATOR_ID" />
+		<result property="errorMessage" column="ERROR_MESSAGE" />
+		<result property="errorMemo" column="ERROR_MEMO" />
+		<result property="errorLevel" column="ERROR_LEVEL" />
+		<result property="errorTime" column="ERROR_TIME" />
+		<result property="state" column="STATE" />
+	</resultMap>
+
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ErrorRecord.columns">
+	    <![CDATA[
+		 ID ,  FUNCTION_MODULAR_ID ,  OPERATOR_ID , ERROR_MESSAGE , ERROR_MEMO , ERROR_LEVEL , ERROR_TIME , STATE]]>
+	</sql>
+	
+	<sql id="ErrorRecord.where">
+
+		<where>
+			<if test="id != null and id!='' ">
+				AND ID = #{id}
+			</if>
+			<if test="functionModularId != null and functionModularId !='' ">
+				AND FUNCTION_MODULAR_ID = #{functionModularId}
+			</if>
+			<if test="operatorId != null and operatorId !='' ">
+				AND OPERATOR_ID = #{operatorId}
+			</if>
+			<if test="errorMessage != null and errorMessage !='' ">
+				AND ERROR_MESSAGE = #{errorMessage}
+			</if>
+			<if test="errorMemo != null and errorMemo !='' ">
+				AND ERROR_MEMO = #{errorMemo}
+			</if>
+			<if test="errorLevel != null and errorLevel !='' ">
+				AND ERROR_LEVEL = #{errorLevel}
+			</if>
+			<if test="errorTime != null and errorTime !='' ">
+				AND ERROR_TIME = #{errorTime}
+			</if>
+			<if test="state != null and state !='' ">
+				AND STATE = #{state}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="ErrorRecord.insert">
+
+		<selectKey resultType="java.lang.Long" order="BEFORE"
+			keyProperty="id">
+			SELECT SEQ_ERROR_RECORD.nextval FROM DUAL
+		</selectKey>
+
+
+		INSERT INTO SYS_ERROR_RECORD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			,
+			<if test="functionModularId != null ">
+				FUNCTION_MODULAR_ID ,
+			</if>
+			<if test="operatorId != null  ">
+				OPERATOR_ID ,
+			</if>
+			<if test="errorMessage != null ">
+				ERROR_MESSAGE ,
+			</if>
+			<if test="errorMemo != null  ">
+				ERROR_MEMO ,
+			</if>
+			<if test="errorLevel != null ">
+				ERROR_LEVEL  ,
+			</if>
+			<if test="errorTime != null  ">
+				ERROR_TIME 
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			#{id}
+			,
+			<if test="functionModularId != null ">
+				#{functionModularId} ,
+			</if>
+			<if test="operatorId != null  ">
+				#{operatorId} ,
+			</if>
+			<if test="errorMessage != null ">
+				#{errorMessage} ,
+			</if>
+			<if test="errorMemo != null  ">
+				#{errorMemo} ,
+			</if>
+			<if test="errorLevel != null ">
+				#{errorLevel} ,
+			</if>
+			<if test="errorTime != null  ">
+				#{errorTime}
+			</if>
+
+		</trim>
+
+
+	</insert>
+
+	<update id="ErrorRecord.update">
+
+		UPDATE SYS_ERROR_RECORD
+		<set>
+			<if test="functionModularId != null  ">
+				FUNCTION_MODULAR_ID = #{functionModularId} ,
+			</if>
+			<if test="operatorId != null ">
+				OPERATOR_ID = #{operatorId} ,
+			</if>
+			<if test="errorMessage != null  ">
+				ERROR_MESSAGE = #{errorMessage} ,
+			</if>
+			<if test="errorMemo != null ">
+				ERROR_MEMO = #{errorMemo} ,
+			</if>
+			<if test="errorLevel != null  ">
+				ERROR_LEVEL = #{errorLevel} ,
+			</if>
+			<if test="errorTime != null ">
+				ERROR_TIME = #{errorTime} ,
+			</if>
+			<if test="state != null ">
+				STATE = #{state}
+			</if>
+		</set>
+		WHERE
+		ID=#{id}
+
+	</update>
+
+	<delete id="ErrorRecord.deleteById">
+    <![CDATA[
+        DELETE FROM  SYS_ERROR_RECORD WHERE  ID=#{id} 
+    ]]>
+	</delete>
+
+	<select id="ErrorRecord.getById" resultMap="ErrorRecord">
+		SELECT
+		<include refid="ErrorRecord.columns" />
+	    <![CDATA[
+		    FROM  SYS_ERROR_RECORD WHERE  ID=#{id} 
+       ]]>
+	</select>
+
+	<select id="ErrorRecord.pageCount" resultType="long">
+		SELECT COUNT(1) FROM SYS_ERROR_RECORD 
+		<include refid="ErrorRecord.where" />
+	</select>
+
+	<select id="ErrorRecord.select" resultMap="ErrorRecord">
+		SELECT
+		<include refid="ErrorRecord.columns" />
+		FROM SYS_ERROR_RECORD 
+		<include refid="ErrorRecord.where" />
+
+	</select> 
+	
+	<select id="ErrorRecord.selectErrorByLevel" resultMap="ErrorRecord">
+		SELECT
+		<include refid="ErrorRecord.columns" />
+		FROM SYS_ERROR_RECORD where ERROR_LEVEL >= #{errorLevel} AND STATE = #{state}
+
+	</select>
+	
+	<select id="ErrorRecord.pageQuerys" resultMap="ErrorRecord">
+		SELECT
+		<include refid="ErrorRecord.columns" />
+		from
+			(
+			SELECT
+			<include refid="ErrorRecord.columns" />
+			, rownum as row_num FROM
+				(
+					SELECT
+					<include refid="ErrorRecord.columns" />
+					FROM SYS_ERROR_RECORD
+					order by ERROR_TIME desc
+				)
+			)w
+		WHERE w.row_num>#{pageFrom} and w.row_num &lt;=#{pageTo}
+		order by w.ERROR_TIME asc			
+	</select>
+
+
+	<update id="ErrorRecord.updateState">
+		UPDATE SYS_ERROR_RECORD
+		<set>
+			<if test="state != null and state !='' ">
+				STATE = #{state}
+			</if>
+		</set>
+		WHERE ID in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+</mapper>

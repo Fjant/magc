@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.job">
+
+	<resultMap id="JobEntity" type="com.xincheng.job.model.JobEntity">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+		<result property="group" column="JOB_GROUP" />
+		<result property="classPath" column="CLASS_PATH" />
+		<result property="method" column="METHOD" />
+		<result property="argument" column="ARGUMENT" />
+		<result property="cronExpression" column="CRON_EXPRESSION" />
+		<result property="isConcurrent" column="IS_CONCURRENT" />
+		<result property="incTypeId" column="INC_TYPE_ID" />		
+		<result property="statusId" column="STATUS_ID" />
+		<result property="remark" column="REMARK" />
+		<result property="createBy" column="CREATE_BY" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="JobEntity.columns">
+	    <![CDATA[
+		 ID,NAME,JOB_GROUP,CLASS_PATH,METHOD,ARGUMENT,CRON_EXPRESSION,IS_CONCURRENT,INC_TYPE_ID,STATUS_ID,REMARK,CREATE_BY,CREATE_TIME,UPDATE_TIME
+		 	    ]]>
+	</sql>
+
+	<sql id="JobEntity.where">
+		<where>
+			<if test="id != null and id!='' ">
+				AND ID = #{id}
+			</if>
+			<if test="name != null and name !='' ">
+				AND NAME like '%'||#{name}||'%'
+			</if>
+			<if test="statusId != null and statusId !='' ">
+				AND STATUS_ID = #{statusId}
+			</if>
+			<if test="createBy != null and createBy!='' ">
+				AND CREATE_BY = #{createBy}
+			</if>
+			<if test="createStartTime != null and createStartTime!='' ">
+				AND CREATE_TIME &gt;= #{createStartTime}
+			</if>
+			<if test="createEndTime != null and createEndTime !='' ">
+				AND CREATE_TIME &lt;= #{createEndTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="JobEntity.insert">
+		insert into SYS_JOB
+		(
+		<include refid="JobEntity.columns" />
+		)
+		values
+		(SEQ_SYS_JOB.NEXTVAL,#{name},#{group},#{classPath},#{method},#{argument},#{cronExpression},#{isConcurrent},#{incTypeId},#{statusId},#{remark},#{createBy},SYSDATE,NULL)
+	</insert>
+
+       <!-- 运行任务 -->
+    <update id="JobEntity.startJob">
+        UPDATE SYS_JOB
+		 <set>
+			STATUS_ID = 1
+				,
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+		<!-- 停止任务 -->
+    </update>
+        <update id="JobEntity.stopJob">
+        UPDATE SYS_JOB
+		 <set>
+			STATUS_ID = 0
+				,
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+    </update>
+	<update id="JobEntity.update">
+		UPDATE SYS_JOB
+		<set>
+			<if test="name != null ">
+				NAME = #{name}
+				,
+			</if>
+			<if test="group != null ">
+				JOB_GROUP = #{group}
+				,
+			</if>
+			<if test="classPath != null ">
+				CLASS_PATH = #{classPath}
+				,
+			</if>
+			<if test="method != null ">
+				METHOD = #{method}
+				,
+			</if>
+			<if test="isConcurrent != null ">
+				IS_CONCURRENT = #{isConcurrent}
+				,
+			</if>
+			<if test="incTypeId != null ">
+				INC_TYPE_ID = #{incTypeId}
+				,
+			</if>
+			ARGUMENT = #{argument},
+			<if test="cronExpression != null ">
+				CRON_EXPRESSION = #{cronExpression}
+				,
+			</if>
+			<if test="statusId != null ">
+				STATUS_ID = #{statusId}
+				,
+			</if>
+			REMARK = #{remark},
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+	</update>
+
+	<select id="JobEntity.select" resultMap="JobEntity">
+		SELECT
+		<include refid="JobEntity.columns" />
+		FROM SYS_JOB
+	</select>
+	
+	<select id="JobEntity.getList" resultMap="JobEntity">
+		SELECT
+		<include refid="JobEntity.columns" />
+		FROM SYS_JOB
+		<include refid="JobEntity.where" />
+	</select>
+
+	<select id="JobEntity.getById" resultMap="JobEntity">
+		SELECT
+		<include refid="JobEntity.columns" />
+		FROM SYS_JOB
+		WHERE
+		ID=#{id}
+	</select>
+
+	<select id="JobEntity.getByPage" resultMap="JobEntity">
+		SELECT R.* FROM (
+			SELECT T.*,rownum row_num FROM (
+			SELECT
+			<include refid="JobEntity.columns" />
+			FROM SYS_JOB
+			<include refid="JobEntity.where" />
+			) T
+		) R
+		WHERE R.row_num &lt;=#{pageTo} and R.row_num >#{pageFrom}
+	</select>
+
+	<select id="JobEntity.count" resultType="int">
+		SELECT count(1) FROM SYS_JOB
+		<include refid="JobEntity.where" />
+	</select>
+	<delete id="JobEntity.deleteByPrimaryKey">
+	<![CDATA[
+        DELETE FROM  SYS_JOB
+        WHERE  
+        						ID=#{id}
+																																																																																																									    ]]>
+	</delete>
+	<select id="JobEntity.selectCount" resultType="int">
+		SELECT COUNT(1) FROM SYS_JOB 
+			<where>
+				<if test="id != null and id !='' ">
+					AND ID &lt;> #{id}
+				</if>	
+				<if test="incTypeId != null and incTypeId !='' ">
+					AND INC_TYPE_ID = #{incTypeId}
+				</if>
+			</where>
+	</select>
+</mapper>

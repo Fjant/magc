@@ -1,0 +1,263 @@
+* {
+	font-size: 12px;
+	font-family: Arial;
+}
+
+.z_btn {
+	height: 26px;
+	width: 40px;
+}
+
+a {
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+.wxadd_book {
+	width: 96%;
+	margin-left: 2%;
+	padding-bottom: 20px;
+}
+
+.wxadd_head {
+	width: 100%;
+	height: 54px;
+	margin: 0 auto;
+	background: url(../img/bg1_03.png) repeat;
+	text-indent: 1em;
+}
+
+.wxadd_head span {
+	line-height: 70px;
+}
+
+.wxadd_list {
+	width: 100%;
+	margin: 10px auto;
+	font-size: 10px;
+}
+
+.wxadd_list_h {
+	height: 24px;
+	background-color: #b9dce2;
+	position: relative;
+}
+
+.wxadd_list_h a {
+	text-decoration: none;
+	width: 75px;
+	height: 20px;
+	text-align: center;
+	line-height: 20px;
+	background-color: #b5c7d3;
+	display: inline-block;
+	color: #666;
+	margin: 2px;
+	border-radius: 5px;
+}
+
+.wxadd_list_h a:hover {
+	background-color: #ECF1F4;
+	transition: all 0.9s linear;
+}
+
+.wxadd_list_h .wxadd_list_ha {
+	height: 24px;
+	width: 116px;
+	position: absolute;
+	top: 0px;
+	right: 0;
+	line-height: 24px;
+}
+
+.wxadd_list_ha .wxadd_del {
+	width: 58px;
+	background-color: #B9DCE2;
+}
+
+.wxadd_list table {
+	width: 100%;
+	border: 1px solid #D4D4D4;
+	border-collapse: collapse;
+}
+
+.wxadd_list tr td {
+	border: 1px solid #D4D4D4;
+	line-height: 25px;
+	text-align: center;
+}
+
+.wxadd_list .wxadd_list_tr {
+	background-color: #d6e8ea;
+}
+
+.wxadd_list table tr td .wxadd_list_tr_a {
+	width: 48px;
+	background-color: #fff;
+	color: #333;
+}
+
+.wxadd_page_text {
+	width: 24px;
+	height: 15px;
+	border: 1px solid #ccc;
+	float: left;
+}
+
+.wxadd_page {
+	height: 14px;
+	margin-top: 20px;
+}
+
+.wxadd_page1 {
+	float: left;
+}
+
+.wxadd_page2 {
+	width: 293px;
+	height: 14px;
+	float: right;
+}
+
+.wxadd_page .wxadd_page2 a, .wxadd_page_s {
+	display: block;
+	float: left;
+	margin: 0px 5px 0px 5px;
+	color: #333;
+}
+/*系统配置*/
+.wxadd_head ul li {
+	float: left;
+	line-height: 51px;
+	text-align: center;
+	text-indent: 0px;
+	width: 124px;
+}
+
+.wxadd_head ul .wxadd_head_li {
+	border-bottom: 3px solid #3fe8e1;
+}
+
+.t_con {
+	display: none;
+	margin-top: 35px;
+}
+
+.wxadd_syslist {
+	display: block;
+}
+
+.wxadd_syslist2 {
+	
+}
+
+.wxadd_syslist3 {
+	
+}
+
+.t_con ul li {
+	margin-top: 10px;
+	position: relative;
+}
+
+.t_con label {
+	text-align: right;
+	width: 110px;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.sy_text {
+	width: 248px;
+	height: 25px;
+	border: 1px solid #ccc;
+	text-indent: 1em
+}
+
+.sys_submit {
+	width: 100px;
+	height: 35px;
+	text-align: center;
+	line-height: 35px;
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+	font-size: 12px;
+}
+
+.sys_submit_color {
+	background-color: #3fa8e1;
+	margin-left: 127px;
+	margin-right: 40px;
+}
+
+.sys_submit_color2 {
+	background-color: #b6c0c9;
+}
+
+.sy_label_remark {
+	position: absolute;
+	top: 0;
+}
+
+.wxadd_syslist3 ul li textarea {
+	width: 244px;
+	margin-left: 128px;
+}
+/*信息编辑*/
+.z_div {
+	width: 700px;
+	border: 1px solid #eee;
+	overflow-x: auto;
+	text-indent: 12px;
+	position: absolute;
+	top: 99px;
+	left: 30%;
+	background-color: #b9dce2;
+	z-index: 3;
+	border-radius: 6px;
+	display: none;	
+}
+
+.z_div .z_btn {
+	margin: 10px 12px 10px 12px;
+}
+
+.z_div h3 {
+	margin: 10px;
+}
+
+.z_div  ul li {
+	width: 100%;
+	height: 25px;
+	line-height: 25px;
+	margin: 5px 0px 5px 0px;
+}
+
+.z_div  ul li label {
+	width: 19%;
+	text-align: right;
+	display: inline-block;
+	float: left;
+}
+
+.z_div  ul li .z_txt {
+	width: 79.9%;
+	border: 1px solid #ccc;
+	display: inline-block;
+	float: left;
+	height: 25px;
+	line-height: 25px;
+}

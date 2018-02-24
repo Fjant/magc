@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.errorObserver">
+
+
+	<resultMap id="ErrorProcessing" type="com.xincheng.errorObserver.model.ErrorProcessing">
+		<result property="id" column="ID" />
+		<result property="errorIdArr" column="ERROR_ID_ARR" />
+		<result property="sendContent" column="SEND_CONTENT" />
+		<result property="notifierPhone" column="NOTIFIER_PHONE" />
+		<result property="notifierPhonemsgResult" column="NOTIFIER_PHONEMSG_RESULT" />
+		<result property="notifierEmail" column="NOTIFIER_EMAIL" />
+		<result property="notifierEmailResult" column="NOTIFIER_EMAIL_RESULT" />
+		<result property="notifierWeixin" column="NOTIFIER_WEIXIN" />
+		<result property="notifierWeixinResult" column="NOTIFIER_WEIXIN_RESULT" />
+		<result property="createTime" column="CREATE_TIME" />
+	</resultMap>
+
+	<resultMap id="FunctionModular" type="com.xincheng.errorObserver.model.FunctionModular">
+		<result property="id" column="ID" />
+		<result property="name" column="NAME" />
+	</resultMap>
+
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="ErrorProcessing.columns">
+	    <![CDATA[
+		 ID ,  ERROR_ID_ARR ,  SEND_CONTENT , NOTIFIER_PHONE , NOTIFIER_PHONEMSG_RESULT , NOTIFIER_EMAIL , NOTIFIER_EMAIL_RESULT , CREATE_TIME , NOTIFIER_WEIXIN , NOTIFIER_WEIXIN_RESULT]]>
+	</sql>
+	<sql id="FunctionModular.columns">
+	    <![CDATA[
+		 ID ,  NAME ]]>
+	</sql>
+	
+	<sql id="ErrorProcessing.where">
+
+		<where>
+			<if test="id != null and id!='' ">
+				AND ID = #{id}
+			</if>
+			<if test="errorIdArr != null and errorIdArr !='' ">
+				AND ERROR_ID_ARR = #{errorIdArr}
+			</if>
+			<if test="sendContent != null and sendContent !='' ">
+				AND SEND_CONTENT = #{sendContent}
+			</if>
+			<if test="notifierPhone != null and notifierPhone !='' ">
+				AND NOTIFIER_PHONE = #{notifierPhone}
+			</if>
+			<if test="notifierPhonemsgResult != null and notifierPhonemsgResult !='' ">
+				AND NOTIFIER_PHONEMSG_RESULT = #{notifierPhonemsgResult}
+			</if>
+			<if test="notifierEmail != null and notifierEmail !='' ">
+				AND NOTIFIER_EMAIL = #{notifierEmail}
+			</if>
+			<if test="notifierEmailResult != null and notifierEmailResult !='' ">
+				AND NOTIFIER_EMAIL_RESULT = #{notifierEmailResult}
+			</if>
+			<if test="notifierWeixin != null and notifierWeixin !='' ">
+				AND NOTIFIER_WEIXIN = #{notifierWeixin}
+			</if>
+			<if test="notifierWeixinResult != null and notifierWeixinResult !='' ">
+				AND NOTIFIER_WEIXIN_RESULT = #{notifierWeixinResult}
+			</if>
+			<if test="createTime != null and createTime !='' ">
+				AND CREATE_TIME = #{createTime}
+			</if>
+		</where>
+	</sql>
+
+
+	<insert id="ErrorProcessing.insert">
+
+		<selectKey resultType="java.lang.Long" order="BEFORE" keyProperty="id">
+			SELECT SEQ_ERROR_PROCESSING_RECORD.nextval FROM DUAL
+		</selectKey>
+
+
+		INSERT INTO SYS_ERROR_PROCESSING_RECORD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID
+			,
+			<if test="errorIdArr != null ">
+				ERROR_ID_ARR ,
+			</if>
+			<if test="sendContent != null ">
+				SEND_CONTENT ,
+			</if>
+			<if test="notifierPhone != null">
+				NOTIFIER_PHONE ,
+			</if>
+			<if test="notifierPhonemsgResult != null  ">
+				NOTIFIER_PHONEMSG_RESULT ,
+			</if>
+			<if test="notifierEmail != null  ">
+				NOTIFIER_EMAIL ,
+			</if>
+			<if test="notifierEmailResult != null ">
+				NOTIFIER_EMAIL_RESULT ,
+			</if>
+			<if test="notifierWeixin != null ">
+				NOTIFIER_WEIXIN ,
+			</if>
+			<if test="notifierWeixinResult != null  ">
+				NOTIFIER_WEIXIN_RESULT ,
+			</if>
+			<if test="createTime != null ">
+				CREATE_TIME 
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			#{id}
+			,
+			<if test="errorIdArr != null ">
+				#{errorIdArr},
+			</if>
+			<if test="sendContent != null ">
+				#{sendContent},
+			</if>
+			<if test="notifierPhone != null">
+				#{notifierPhone},
+			</if>
+			<if test="notifierPhonemsgResult != null  ">
+				#{notifierPhonemsgResult},
+			</if>
+			<if test="notifierEmail != null  ">
+				#{notifierEmail},
+			</if>
+			<if test="notifierEmailResult != null ">
+				#{notifierEmailResult},
+			</if>
+			<if test="notifierWeixin != null ">
+				#{notifierWeixin},
+			</if>
+			<if test="notifierWeixinResult != null  ">
+				#{notifierWeixinResult},
+			</if>
+			<if test="createTime != null ">
+				#{createTime}
+			</if>
+		</trim>
+
+
+	</insert>
+
+	<update id="ErrorProcessing.update">
+
+		UPDATE SYS_ERROR_PROCESSING_RECORD
+		<set>
+			<if test="errorIdArr != null ">
+				ERROR_ID_ARR = #{errorIdArr},
+			</if>
+			<if test="sendContent != null ">
+				SEND_CONTENT = #{sendContent},
+			</if>
+			<if test="notifierPhone != null">
+				NOTIFIER_PHONE = #{notifierPhone},
+			</if>
+			<if test="notifierPhonemsgResult != null  ">
+				NOTIFIER_PHONEMSG_RESULT = #{notifierPhonemsgResult},
+			</if>
+			<if test="notifierEmail != null  ">
+				NOTIFIER_EMAIL = #{notifierEmail},
+			</if>
+			<if test="notifierEmailResult != null ">
+				NOTIFIER_EMAIL_RESULT = #{notifierEmailResult},
+			</if>
+			<if test="notifierWeixin != null ">
+				NOTIFIER_WEIXIN = #{notifierWeixin},
+			</if>
+			<if test="notifierWeixinResult != null  ">
+				NOTIFIER_WEIXIN_RESULT = #{notifierWeixinResult}
+			</if>
+		</set>
+		WHERE
+		ID=#{id}
+
+	</update>
+
+	<delete id="ErrorProcessing.deleteById">
+    <![CDATA[
+        DELETE FROM  SYS_ERROR_PROCESSING_RECORD
+        WHERE  
+        						ID=#{id}
+																																																																																																									    ]]>
+	</delete>
+
+	<select id="ErrorProcessing.getById" resultMap="ErrorProcessing">
+		SELECT
+		<include refid="ErrorProcessing.columns" />
+	    <![CDATA[
+		    FROM  SYS_ERROR_PROCESSING_RECORD
+        WHERE  
+        						ID=#{id}
+																																																																																																										    ]]>
+	</select>
+
+	<select id="ErrorProcessing.pageCount" resultType="long">
+		SELECT COUNT(1) FROM SYS_ERROR_PROCESSING_RECORD  
+		<include refid="ErrorProcessing.where" />
+	</select>
+
+	<select id="ErrorProcessing.pageQuerys" resultMap="ErrorProcessing">
+		SELECT
+		<include refid="ErrorProcessing.columns" />
+		from
+			(
+			SELECT
+			<include refid="ErrorProcessing.columns" />
+			, rownum as row_num FROM
+				(
+					SELECT
+					<include refid="ErrorProcessing.columns" />
+					FROM SYS_ERROR_PROCESSING_RECORD
+						
+					order by CREATE_TIME desc
+				)
+			)w
+		WHERE w.row_num>#{pageFrom} and w.row_num &lt;=#{pageTo}
+		order by w.CREATE_TIME asc
+	</select>
+
+	<select id="ErrorProcessing.select" resultMap="ErrorProcessing">
+		SELECT
+		<include refid="ErrorProcessing.columns" />
+		FROM SYS_ERROR_PROCESSING_RECORD
+		<include refid="ErrorProcessing.where" />
+
+	</select>
+	
+	<select id="ErrorProcessing.selectByErrorId" resultMap="ErrorProcessing">
+		SELECT
+		<include refid="ErrorProcessing.columns" />
+		FROM SYS_ERROR_PROCESSING_RECORD where ERROR_ID_ARR  like '%'||#{errorId}||'%'
+
+	</select>
+	
+	<select id="FunctionModular.getById" resultMap="FunctionModular">
+		SELECT
+		<include refid="FunctionModular.columns" />
+			FROM SYS_FUNCTION_MODULAR where ID = #{id}
+	</select>	
+	
+</mapper>

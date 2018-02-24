@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xincheng.msg">
+
+	<resultMap id="MPMsg" type="com.xincheng.msg.model.MPMsg">
+		<result property="id" column="ID" />
+		<result property="openId" column="OPEN_ID" />
+		<result property="cifId" column="CIF_ID" />
+		<result property="customerName" column="CUSTOMER_NAME" />
+		<result property="content" column="CONTENT" />
+		<result property="url" column="URL" />
+		<result property="templateId" column="TEMPLATE_ID" />
+		<result property="typeId" column="TYPE_ID" />
+		<result property="relSys" column="REF_SYS" />		
+		<result property="fromServer" column="FROM_SERVER" />
+		<result property="statusId" column="STATUS_ID" />
+		<result property="sendType" column="SEND_TYPE" />		
+		<result property="sendResult" column="SEND_RESULT" />
+		<result property="remark" column="REMARK" />
+		<result property="sendTime" column="SEND_TIME" />
+		<result property="resendTimes" column="RE_SEND_TIMES" />	
+		<result property="createBy" column="CREATE_BY" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="sendStartDate" column="SEND_START_DATE" />
+		<result property="sendEndDate" column="SEND_END_DATE" />
+		<result property="sendStartTime" column="SEND_START_TIME" />
+		<result property="sendEndTime" column="SEND_END_TIME" />
+	</resultMap>
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="MPMsg.columns">
+	    <![CDATA[
+		 ID,OPEN_ID,CIF_ID,CUSTOMER_NAME,CONTENT,URL,TEMPLATE_ID,TYPE_ID,REF_SYS,FROM_SERVER,STATUS_ID,SEND_TYPE,SEND_RESULT,SEND_TIME,REMARK,RE_SEND_TIMES,SEND_START_DATE,SEND_END_DATE,SEND_START_TIME,SEND_END_TIME,CREATE_BY,CREATE_TIME,UPDATE_TIME
+		 	    ]]>
+	</sql>
+
+	<sql id="MPMsg.where">
+		<where>
+			<if test="id != null">
+				AND ID = #{id}
+			</if>
+			<if test="openId != null and openId!='' ">
+				AND OPEN_ID  like '%'||#{openId}||'%'
+			</if>
+			<if test="cifId != null and cifId!='' ">
+				AND CIF_ID = #{cifId}
+			</if>
+			<if test="customerName != null and customerName!='' ">
+				AND CUSTOMER_NAME like '%'||#{customerName}||'%'
+			</if>
+			<if test="content != null and content!='' ">
+				AND CONTENT like '%'||#{content}||'%'
+			</if>
+			<if test="typeId != null">
+				AND TYPE_ID = #{typeId}
+			</if>
+			AND SEND_TYPE &lt;>3
+			<if test="sendType != null">
+				AND SEND_TYPE = #{sendType}
+			</if>
+			<if test="statusId != null">
+				AND STATUS_ID = #{statusId}
+			</if>
+			<if test="sendStartTime != null and sendStartTime!='' ">
+				AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &gt;= #{sendStartTime}
+			</if>
+		    <if test="sendEndTime != null and sendEndTime!='' ">
+			    AND TO_CHAR(SEND_TIME,'yyyy-MM-dd') &lt;= #{sendEndTime}
+		    </if>
+			<if test="createBy != null and createBy!='' ">
+				AND CREATE_BY = #{createBy}
+			</if>
+			<if test="createStartTime != null and createStartTime!='' ">
+				AND CREATE_TIME &gt;= #{createStartTime}
+			</if>
+			<if test="createEndTime != null and createEndTime!='' ">
+				AND CREATE_TIME &lt;= #{sendEndTime}
+			</if>
+		</where>
+	</sql>
+
+	<insert id="MPMsg.insert">
+		insert into MSG_MP
+		(
+		<include refid="MPMsg.columns" />
+		)
+		values
+		(SEQ_MSG_MP.NEXTVAL,#{openId},#{cifId,jdbcType=VARCHAR},#{customerName,jdbcType=VARCHAR},#{content},#{url,jdbcType=VARCHAR},#{templateId},#{typeId},#{relSys},#{fromServer},#{statusId},#{sendType},#{sendResult,jdbcType=VARCHAR},#{sendTime,jdbcType=TIMESTAMP},#{remark,jdbcType=VARCHAR},#{resendTimes,jdbcType=INTEGER},#{sendStartDate,jdbcType=DATE},#{sendEndDate,jdbcType=DATE},#{sendStartTime,jdbcType=VARCHAR},#{sendEndTime,jdbcType=VARCHAR},#{createBy},SYSDATE,NULL)
+	</insert>
+
+	<update id="MPMsg.update">
+		UPDATE MSG_MP
+		<set>
+			<if test="statusId != null ">
+				STATUS_ID = #{statusId}
+				,
+			</if>
+			<if test="sendResult != null ">
+				SEND_RESULT = #{sendResult}
+				,
+			</if>
+			RE_SEND_TIMES = #{resendTimes,jdbcType=INTEGER},
+			REMARK = #{remark,jdbcType=VARCHAR},
+			SEND_TIME = SYSDATE,
+			UPDATE_TIME = SYSDATE
+		</set>
+		WHERE
+		ID=#{id}
+	</update>
+
+	<select id="MPMsg.getList" resultMap="MPMsg">
+		SELECT
+		<include refid="MPMsg.columns" />
+		FROM MSG_MP
+		<include refid="MPMsg.where" />
+	</select>
+
+	<select id="MPMsg.getById" resultMap="MPMsg">
+		SELECT
+		<include refid="MPMsg.columns" />
+		FROM MSG_MP
+		WHERE
+		ID=#{id}
+	</select>
+
+	<select id="MPMsg.getByPage" resultMap="MPMsg">
+		SELECT R.* FROM (
+		SELECT T.*,rownum row_num FROM (
+		SELECT
+		<include refid="MPMsg.columns" />
+		FROM MSG_MP
+		<where>
+		   (SEND_START_DATE IS NULL OR
+		       (SEND_START_DATE IS NOT NULL AND TRUNC(SYSDATE) >= TRUNC(SEND_START_DATE)))
+		   AND (SEND_END_DATE IS NULL OR
+		       (SEND_END_DATE IS NOT NULL AND TRUNC(SYSDATE) &lt;= TRUNC(SEND_END_DATE)))
+		   AND (SEND_START_TIME IS NULL OR
+		       (SEND_START_TIME IS NOT NULL AND
+		       TO_NUMBER(TO_CHAR(SYSDATE, 'hh24mi')) >=
+		       TO_NUMBER(REPLACE(SEND_START_TIME, ':', ''))))
+		   AND (SEND_END_TIME IS NULL OR
+		       (SEND_END_TIME IS NOT NULL AND
+		       TO_NUMBER(TO_CHAR(SYSDATE, 'hh24mi')) &lt;=
+		       TO_NUMBER(REPLACE(SEND_END_TIME, ':', ''))))
+		   AND SEND_TYPE &lt;>3
+            <if test="statusId != null">
+				AND STATUS_ID = #{statusId}
+			</if>
+		</where>
+		) T
+		) R
+		WHERE R.row_num &lt;=#{pageTo} and R.row_num >#{pageFrom}
+
+	</select>
+	
+	<!-- 分页查询列表 -->
+	<select id="MPMsg.pageQuery" resultMap="MPMsg">
+		SELECT R.* FROM (
+		SELECT T.*,rownum row_num FROM (
+		SELECT
+		<include refid="MPMsg.columns" />
+		FROM MSG_MP
+	    <include refid="MPMsg.where" />
+		) T
+		) R
+		WHERE R.row_num &lt;=#{pageTo} and R.row_num >#{pageFrom}
+
+	</select>
+
+	<select id="MPMsg.count" resultType="int">
+		SELECT count(1) FROM MSG_MP
+		<include refid="MPMsg.where" />
+	</select>
+	
+	<delete id="MPMsg.deleteByPrimaryKey">
+    <![CDATA[
+        DELETE FROM  MSG_MP
+        WHERE  
+        						ID=#{id}
+																																																																																																									    ]]>
+	</delete>
+	
+</mapper>
